@@ -4,6 +4,8 @@ import { uid } from 'uid';
 import { Icon } from '@iconify/vue';
 import TodoCreator from '../components/TodoCreator.vue';
 import TodoItem from "../components/TodoItem.vue";
+import UserGet from "../components/UserGet.vue";
+import UserCreator from "../components/UserCreator.vue";
 const todoList = ref([]);
 
 watch(todoList, () => {
@@ -79,8 +81,16 @@ const deleteTodo = (todoId) => {
       <Icon icon="noto-v1:party-popper" />
       <span>You have completed all your todos!</span>
     </p>
+    <br/>
+    
+    <UserGet />
+    <br />
+    <UserCreator></UserCreator>
   </main>
+
 </template>
+
+
 
 <style scoped lang="scss">
 main {

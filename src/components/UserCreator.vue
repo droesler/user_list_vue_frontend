@@ -1,6 +1,6 @@
 <script setup>
 
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import UserCreateButton from "../components/UserCreateButton.vue";
 
 const userState = reactive({
@@ -16,21 +16,20 @@ const createUser = () => {
     if (userState.id !== "" && userState.name !== "" && userState.email != "") {
         
         const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userState),
-        }
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userState),
+        };
 
-        console.log(JSON.stringify(userState));
+        // console.log(JSON.stringify(userState));
 
         fetch('http://localhost:8080/api/users', requestOptions)
+          .then(response => emit("create-user", response.json()));
 
         userState.id = "";
         userState.name = "";
         userState.email = "";
-
-        emit("create-user");
-
+        
         return;
     }
     alert('Fields are incomplete. Please fill out every field.')

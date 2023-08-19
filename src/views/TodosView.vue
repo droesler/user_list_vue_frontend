@@ -4,15 +4,39 @@ import { uid } from 'uid';
 import { Icon } from '@iconify/vue';
 import TodoCreator from '../components/TodoCreator.vue';
 import TodoItem from "../components/TodoItem.vue";
-import UserGet from "../components/UserGet.vue";
 import UserCreator from "../components/UserCreator.vue";
+import UserList from "../components/UserList.vue";
+
 const todoList = ref([]);
+
+const userListKey = ref(0);
+
+const refreshList = () => {
+  userListKey.value += 1;
+  console.log(userListKey.value);
+}
 
 watch(todoList, () => {
   setTodoListLocalStorage();
 }, {
   deep: true,
 })
+
+const users = ref([]);
+
+
+const fetchUserList = () => {
+  // GET request using fetch 
+  console.log('fetching data');
+
+  fetch('http://localhost:8080/api/users')
+      .then(response => response.json())
+      .then(data => users.value = data);
+
+  refreshList();
+}
+
+fetchUserList();
 
 const todoCompleted = computed(() => {
   return todoList.value.every((todo) => todo.isCompleted);
@@ -82,10 +106,11 @@ const deleteTodo = (todoId) => {
       <span>You have completed all your todos!</span>
     </p>
     <br/>
-    
-    <UserGet />
+    <UserList :users="users" :key="userListKey" @delete-user="fetchUserList()"/>
+    <button @click="fetchUserList()">Fetch users</button>
     <br />
-    <UserCreator></UserCreator>
+
+    <UserCreator @create-user="fetchUserList()"/>
   </main>
 
 </template>

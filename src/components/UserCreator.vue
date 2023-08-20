@@ -1,6 +1,6 @@
 <script setup>
 
-import { onMounted, reactive } from "vue";
+import { reactive } from "vue";
 import UserCreateButton from "../components/UserCreateButton.vue";
 
 const userState = reactive({
@@ -10,7 +10,6 @@ const userState = reactive({
 });
 
 const emit = defineEmits(["create-user"]);
-
 
 const createUser = () => {
     if (userState.id !== "" && userState.name !== "" && userState.email != "") {
@@ -35,26 +34,26 @@ const createUser = () => {
     alert('Fields are incomplete. Please fill out every field.')
 };
 
-
-
-
 </script>
 
+
 <template>
+    <h2 class="card-header">Create a New User</h2><br />
     <div class="input-wrap">
-        <label for="id">User id:</label>
-        <input id="id" type="text" v-model="userState.id">
+        <label for="id">id:</label>
+        <span><input id="id" type="text" v-model="userState.id"></span>
     </div>
     <br/>
     <div class="input-wrap">
-        <label for="name">User name:</label>
-        <input id="name" type="text" v-model="userState.name">
+        <label for="name">name:</label>
+        <span><input id="name" type="text" v-model="userState.name"></span>
     </div>
     <br/>
     <div class="input-wrap">
-        <label for="email">User email:</label>
-        <input id="email" type="text" v-model="userState.email">
+        <label for="email">email:</label>
+        <span><input id="email" type="text" v-model="userState.email"></span>
     </div>
+    <br/>
     <br/>
     <UserCreateButton @click="createUser()"/>
 </template>
@@ -64,26 +63,28 @@ const createUser = () => {
 .input-wrap {
   display: flex;
   transition: 250ms ease;
-  border: 2px solid #41b080;
 
   &.input-err {
     border-color: red;
   }
 
-  &:focus-within {
-    box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1),
-      0 -2px 4px -2px rgb(0 0 0 / 0.1);
-  }
-
   input {
     width: 100%;
     padding: 8px 6px;
-    border: none;
+    border: 2px solid #41b080;
 
-    &:focus {
-      outline: none;
-    }
   }
+
+  label {
+    width: 60px;
+    float: left;
+  }
+  
+  span {
+    display: block;
+    overflow: hidden;
+  }
+
 }
 
 </style>

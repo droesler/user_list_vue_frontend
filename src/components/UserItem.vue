@@ -5,12 +5,29 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    index: {
+        type: Number,
+        required: true,
+    },
 });
 
-const emit = defineEmits(["edit-user", "update-user", "delete-user"]);
+const emit = defineEmits(["delete-user", "update-user-id", 'update-user-name', 'update-user-email']);
 
 const deleteUser = (currentId) => {
     fetch('http://localhost:8080/api/users/' + currentId, { method: 'DELETE' })
+        .then(response => emit("delete-user"));
+};
+
+const updateUser = (currentId, currentName, currentEmail) => {
+    console.log(currentId);
+    console.log(currentName);
+    console.log(currentEmail);
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ id: currentId, name: currentName, email: currentEmail }),
+    }
+    fetch('http://localhost:8080/api/users/' + currentId, requestOptions)
         .then(response => emit("delete-user"));
 };
 
@@ -18,15 +35,23 @@ const deleteUser = (currentId) => {
     
 <template>
     <li>
-        <div class="todo">
-            <!-- <input v-if="todo.isEditing" type="text" :value="todo.todo" @input="$emit('update-todo', $event.target.value, index)"> -->
+        <div class="user">
+            <label for="idInput">id:</label>
             <span>
-                 {{ "id: " + user.id + " | name: " + user.name + " | email: " + user.email }} 
+                <input name="idInput" id="idInput" type="text" :value="user.id" @input="$emit('update-user-id', $event.target.value, index)">
+            </span>
+            <label for="nameInput">name:</label>
+            <span>
+                <input id="nameInput" type="text" :value="user.name" @input="$emit('update-user-name', $event.target.value, index)">
+            </span>
+            <label for="emailInput">email:</label>
+            <span>
+                <input id="emailInput" type="text" :value="user.email" @input="$emit('update-user-email', $event.target.value, index)">
             </span>
         </div>
+
         <div class="todo-actions">
-            <!-- <Icon v-if="todo.isEditing" icon="ph:check-circle" class="icon" color="#41b080" width="22" @click="$emit('edit-todo', index)"/>
-            <Icon v-else icon="ph:pencil-fill" class="icon" color="#41b080" width="22" @click="$emit('edit-todo', index)"/> -->
+            <Icon icon="ph:check-circle" class="icon" color="#41b080" width="22" @click="updateUser(user.id, user.name, user.email)"/>
             <Icon icon="ph:trash" class="icon" color="#f95e5e" width="22" @click="deleteUser(user.id)"/>
         </div>
     </li>
@@ -61,13 +86,21 @@ const deleteUser = (currentId) => {
             }
         }
 
-        .todo {
+        .user {
             flex: 1;
+            width: 100%;
 
+            label {
+                width: 60px;
+                float: left;
+            }        
 
+            span {
+                display: block;
+                overflow: hidden;
+            }
             input[type="text"] {
                 width: 100%;
-                padding: 2px 6px;
                 border: 2px solid #41b080;
             }
         }

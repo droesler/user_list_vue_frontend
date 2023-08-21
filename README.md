@@ -1,6 +1,8 @@
-# vue-todos
+# user-list-view-frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue 3 frontend for GET/DELETE/PUT operations in a postgresql database in an asp.net web api backend.
+
+based on: [https://github.com/johnkomarnicki/vue-3-crash-course](https://github.com/johnkomarnicki/vue-3-crash-course)
 
 ## Recommended IDE Setup
 

@@ -3,25 +3,13 @@ import { ref } from "vue";
 import UserCreator from "../components/UserCreator.vue";
 import UserList from "../components/UserList.vue";
 
-const userListKey = ref(0);
-
-// const refreshList = () => {
-//   userListKey.value += 1;
-//   console.log(userListKey.value);
-// }
-
 const users = ref([]);
-
 
 const fetchUserList = () => {
   // GET request using fetch 
-  console.log('fetching data');
-
   fetch('http://localhost:8080/api/users')
       .then(response => response.json())
       .then(data => users.value = data);
-
-  //refreshList();
 }
 
 fetchUserList();
@@ -49,7 +37,6 @@ const updateUserEmail = (newValue, userIndex) => {
     <br/>
     <UserList 
     :users="users" 
-    :key="userListKey" 
     @delete-user="fetchUserList"
     @update-user-id="updateUserId"
     @update-user-name="updateUserName"

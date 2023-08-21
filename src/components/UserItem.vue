@@ -16,12 +16,10 @@ const emit = defineEmits(["delete-user", "update-user-id", 'update-user-name', '
 const deleteUser = (currentId) => {
     fetch('http://localhost:8080/api/users/' + currentId, { method: 'DELETE' })
         .then(response => emit("delete-user"));
+        // 'delete-user' is emit to cause the page to refresh the user list via api get
 };
 
 const updateUser = (currentId, currentName, currentEmail) => {
-    console.log(currentId);
-    console.log(currentName);
-    console.log(currentEmail);
     const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json'},
@@ -29,12 +27,13 @@ const updateUser = (currentId, currentName, currentEmail) => {
     }
     fetch('http://localhost:8080/api/users/' + currentId, requestOptions)
         .then(response => emit("delete-user"));
+        // 'delete-user' is emit to cause the page to refresh the user list via api get
 };
-
 </script>
     
 <template>
     <li>
+        <!-- input boxes for useItems -->
         <div class="user">
             <label for="idInput">id:</label>
             <span>
@@ -49,7 +48,7 @@ const updateUser = (currentId, currentName, currentEmail) => {
                 <input id="emailInput" type="text" :value="user.email" @input="$emit('update-user-email', $event.target.value, index)">
             </span>
         </div>
-
+        <!-- buttons on right side of userItems -->
         <div class="todo-actions">
             <Icon icon="ph:check-circle" class="icon" color="#41b080" width="22" @click="updateUser(user.id, user.name, user.email)"/>
             <Icon icon="ph:trash" class="icon" color="#f95e5e" width="22" @click="deleteUser(user.id)"/>

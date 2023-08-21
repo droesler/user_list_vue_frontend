@@ -28,6 +28,7 @@ const emit = defineEmits(["delete-user", "update-user-id", 'update-user-name', '
                 @update-user-name="(value, index) => $emit('update-user-name', value, index)"
                 @update-user-email="(value, index) => $emit('update-user-email', value, index)"
             />
+            <!-- the arrow functions pass the emit payload from userItem up to the HomeView, where the values are updated. -->
         </ul>
     </div>
 </template>

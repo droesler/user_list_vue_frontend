@@ -1,7 +1,6 @@
 <script setup>
 
 import { reactive } from "vue";
-import UserCreateButton from "../components/UserCreateButton.vue";
 
 const userState = reactive({
     id: "",
@@ -19,8 +18,6 @@ const createUser = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(userState),
         };
-
-        // console.log(JSON.stringify(userState));
 
         fetch('http://localhost:8080/api/users', requestOptions)
           .then(response => emit("create-user", response.json()));
@@ -55,7 +52,7 @@ const createUser = () => {
     </div>
     <br/>
     <br/>
-    <UserCreateButton @click="createUser()"/>
+    <button @click="createUser()">Add user to database</button>
 </template>
 
 <style lang="scss" scoped>

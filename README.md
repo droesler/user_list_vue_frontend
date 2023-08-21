@@ -2,7 +2,9 @@
 
 Vue 3 frontend for GET/DELETE/PUT operations in a postgresql database in an asp.net web api backend.
 
-based on: [https://github.com/johnkomarnicki/vue-3-crash-course](https://github.com/johnkomarnicki/vue-3-crash-course)
+The postgresql backend for this project is at:  [https://github.com/droesler/csharp-crud-api](https://github.com/droesler/csharp-crud-api)
+
+Code based on: [https://github.com/johnkomarnicki/vue-3-crash-course](https://github.com/johnkomarnicki/vue-3-crash-course)
 
 ## Recommended IDE Setup
 
